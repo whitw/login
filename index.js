@@ -49,12 +49,7 @@ app.post('/auth/signup', async (req, res)=>{
 		return res.status(400).json({message: "Invalid requests"});
 	}
 	const signUpResult = await loginApp.signup(id, pw, email, nickname);
-	if(signUpResult.result){
-		return res.status(200).json({message: signUpResult.message});
-	}
-	else{
-		return res.status(401).json({message: signUpResult.message});
-	}
+	return res.status(200).json(signUpResult);
 });
 
 app.post('/auth/signout', async(req, res)=>{

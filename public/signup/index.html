@@ -13,35 +13,49 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
 
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required><br><br>
+
+    <label for="nickname">Password:</label>
+    <input type="text" id="nickname" name="nickname" required><br><br>
+
     <button type="submit">Submit</button>
+	<div class="resultNotifier"></div>
   </form>
 
   <script>
-	  axios.get('/auth/check', {withCredentials: true})
-	  .then(function(response){
-		if(response.data.id){
-			window.location.href="/";  
-		}
-	  });
+	axios.get('/auth/check')
+		  .then(response=>{
+					if(response.data.id){
+						window.location.href="/";
+					}
+				});
     // Add event listener to the form
     document.getElementById('loginForm').addEventListener('submit', function(event) {
 	  event.preventDefault();
       // Get the user input
       var id = document.getElementById('id').value;
       var password = document.getElementById('password').value;
+	  var email = document.getElementById('email').value;
+	  var nickname = document.getElementById('nickname').value;
 
       // Create an object with the data
       var data = {
-        id: id,
-        password: password
+        id, password, email, nickname
       };
 
       // Send the POST request using Axios
-      axios.post('/auth/login', data, { withCredentials: true })
+      axios.post('/auth/signup', data, { withCredentials: true })
         .then(function(response) {
           // Handle the successful response
-          console.log(response.data);
-		  window.location.href="/";
+		  if(response.data._result){
+			window.location.href="/";
+			alert('등록 완료! 다시 로그인해주세요...');
+		  }
+		  else{
+			const resultNotifier = document.querySelector('.resultNotifier');
+			resultNotifier.textContent = "Id already exists!"
+		  }
         })
         .catch(function(error) {
           // Handle the error
