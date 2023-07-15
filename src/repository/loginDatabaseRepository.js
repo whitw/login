@@ -1,11 +1,6 @@
-const LoginRepository = require('./loginRepository');
-const LoginResult = require('../dto/loginResult');
 const db = require('./conn');
 
-class LoginDatabaseRepository extends LoginRepository{
-	constructor(){
-		super();
-	}
+class LoginDatabaseRepository{
 
 	async getUserById(id){
 		try{

@@ -1,5 +1,5 @@
 const LoginRepository = require('../repository/loginDatabaseRepository');
-const LoginResult = require('../dto/loginResult');
+const LoginResult = require('../data/loginResult');
 const EncryptService = require('./encryptService');
 
 class LoginService {
