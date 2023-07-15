@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>로그인 페이지 테스트</h1>
+	로그인 상태: <span class="login-state"></span>
+	<a href="/auth/login"></a>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		const state = document.querySelector(".login-state");
+		axios
+			.get('/auth/check')
+			.then((response)=>{
+				const id = response.data.id;
+				if(id){
+					state.innerHTML = `안녕하세요, ${id}님!<button class="logout">로그아웃</button>`;
+					const logoutButton = document.querySelector('.logout');
+					logoutButton.addEventListener('click', (e)=>{
+						axios.post('/auth/signout');
+						window.location.href="/";
+					});
+				}
+				else{
+							state.innerHTML = `<a href="/login"><button>로그인해주세요</button></a><a href="/signup"><button>회원 가입</button></a>`;
+				}
+			});
+	</script>
+</body>
+</html>
